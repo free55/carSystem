@@ -1,6 +1,7 @@
 package com.jkxy.car.api.service;
 
 import com.jkxy.car.api.pojo.Car;
+import com.jkxy.car.api.pojo.FindCarInfo;
 
 import java.util.List;
 
@@ -18,4 +19,8 @@ public interface CarService {
     void updateById(Car car);
 
     void insertCar(Car car);
+
+    List<Car> findByType(String type);
+
+    List<Car> findCarRange(FindCarInfo findCarInfo);
 }

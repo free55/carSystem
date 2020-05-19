@@ -1,6 +1,6 @@
 package com.jkxy.car.api.dao;
 
-import com.jkxy.car.api.pojo.Car;
+import com.jkxy.car.api.pojo.*;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -25,4 +25,10 @@ public interface CarDao {
 
     @Insert("insert into carMessage(carName,carType,price,carSeries) values(#{carName},#{carType},#{price},#{carSeries})")
     void insertCar(Car car);
+
+    @Select("select * from carMessage where carType = #{type}")
+    List<Car> findByType(String type);
+
+    @Select("select * from carMessage where carName LIKE CONCAT('%',#{carName},'%') LIMIT #{range1},#{range2}")
+    List<Car> findCarRange(FindCarInfo findCarInfo);
 }

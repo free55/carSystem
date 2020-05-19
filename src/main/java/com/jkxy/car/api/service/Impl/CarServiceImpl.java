@@ -2,6 +2,7 @@ package com.jkxy.car.api.service.Impl;
 
 import com.jkxy.car.api.dao.CarDao;
 import com.jkxy.car.api.pojo.Car;
+import com.jkxy.car.api.pojo.FindCarInfo;
 import com.jkxy.car.api.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,4 +44,18 @@ public class CarServiceImpl implements CarService {
     public void insertCar(Car car) {
         carDao.insertCar(car);
     }
+    @Override
+    public List<Car> findByType(String type){
+        return carDao.findByType(type);
+    }
+
+    @Override
+    public List<Car> findCarRange(FindCarInfo findCarInfo){
+        int startNum = findCarInfo.getRange1()-1;
+        int num = findCarInfo.getRange2()-startNum;
+        findCarInfo.setRange2(num);
+        findCarInfo.setRange1(startNum);
+        return carDao.findCarRange(findCarInfo);
+    }
+
 }

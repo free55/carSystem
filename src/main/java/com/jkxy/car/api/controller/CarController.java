@@ -1,6 +1,7 @@
 package com.jkxy.car.api.controller;
 
 import com.jkxy.car.api.pojo.Car;
+import com.jkxy.car.api.pojo.FindCarInfo;
 import com.jkxy.car.api.service.CarService;
 import com.jkxy.car.api.utils.JSONResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,5 +85,26 @@ public class CarController {
     public JSONResult insertCar(Car car) {
         carService.insertCar(car);
         return JSONResult.ok();
+    }
+
+    @PostMapping("buyCar")
+    public JSONResult buyCar(Car car){
+        List<Car> cars=carService.findByType(car.getCarType());
+        if(car.getNum()<=cars.size()){
+            for (int i = 0; i <car.getNum(); i++) {
+                carService.deleteById(cars.get(i).getId());
+            }
+            return JSONResult.ok();
+        }else {
+            return JSONResult.errorException("购车数量大于库存数量");
+        }
+    }
+    @PostMapping("findCarRange")
+    public JSONResult findCarRange(FindCarInfo findCarInfo){
+        if(findCarInfo.getRange1()<=0 || findCarInfo.getRange2()<findCarInfo.getRange1()){
+            return JSONResult.errorException("查询的数据范围错误");
+        }
+        List<Car> cars = carService.findCarRange(findCarInfo);
+        return JSONResult.ok(cars);
     }
 }

@@ -7,6 +7,15 @@ public class Car {
     private String carType;
     private String price;
     private String carSeries;
+    private int num;
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
 
     public int getId() {
         return id;
